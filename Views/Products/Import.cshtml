@@ -1,0 +1,422 @@
+﻿@{
+    ViewData["Title"] = "Excel yuklash";
+}
+
+<div class="page-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2>📤 Excel fayldan mahsulotlarni yuklash</h2>
+        </div>
+
+        <div class="import-content">
+            <!-- Instructions -->
+            <div class="instruction-box">
+                <h3>📋 Qanday ishlaydi?</h3>
+                <ol class="instruction-list">
+                    <li>
+                        <strong>Excel shablonini yuklab oling</strong>
+                        <p>Quyidagi tugma orqali to'g'ri formatdagi shablon faylni yuklab oling</p>
+                    </li>
+                    <li>
+                        <strong>Ma'lumotlarni kiriting</strong>
+                        <p>Shablon fayldagi namuna ma'lumotlarni o'chirib, o'z ma'lumotlaringizni kiriting</p>
+                    </li>
+                    <li>
+                        <strong>Faylni yuklang</strong>
+                        <p>To'ldirilgan Excel faylni quyida yuklang</p>
+                    </li>
+                </ol>
+
+                <a href="@Url.Action("DownloadTemplate")" class="btn btn-info btn-large">
+                    📋 Excel shablonini yuklab olish
+                </a>
+            </div>
+
+            <!-- Excel Format Info -->
+            <div class="format-info">
+                <h3>📊 Excel fayl formati</h3>
+                <div class="format-table">
+                    <div class="format-row header-row">
+                        <div class="format-cell">Ustun</div>
+                        <div class="format-cell">Majburiy</div>
+                        <div class="format-cell">Tavsif</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Name</strong></div>
+                        <div class="format-cell"><span class="badge-required">Ha</span></div>
+                        <div class="format-cell">Mahsulot nomi</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Category</strong></div>
+                        <div class="format-cell"><span class="badge-required">Ha</span></div>
+                        <div class="format-cell">Kategoriya (masalan: Electronics, Accessories)</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Price</strong></div>
+                        <div class="format-cell"><span class="badge-required">Ha</span></div>
+                        <div class="format-cell">Narx (faqat raqam)</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Description</strong></div>
+                        <div class="format-cell"><span class="badge-optional">Yo'q</span></div>
+                        <div class="format-cell">Mahsulot tavsifi</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Quantity</strong></div>
+                        <div class="format-cell"><span class="badge-required">Ha</span></div>
+                        <div class="format-cell">Miqdor (faqat raqam)</div>
+                    </div>
+                    <div class="format-row">
+                        <div class="format-cell"><strong>Manufacturer</strong></div>
+                        <div class="format-cell"><span class="badge-optional">Yo'q</span></div>
+                        <div class="format-cell">Ishlab chiqaruvchi</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Form -->
+            <div class="upload-section">
+                <h3>📁 Excel faylni yuklash</h3>
+                <form method="post" action="@Url.Action("Import")" enctype="multipart/form-data" class="upload-form">
+                    @Html.AntiForgeryToken()
+
+                    <div class="file-upload-area">
+                        <div class="file-upload-icon">📄</div>
+                        <label for="file" class="file-upload-label">
+                            <span class="file-upload-text">Excel faylni tanlang yoki bu yerga tashlang</span>
+                            <span class="file-upload-hint">.xlsx yoki .xls formatdagi fayllar qabul qilinadi</span>
+                        </label>
+                        <input type="file" id="file" name="file" accept=".xlsx,.xls" class="file-input" required>
+                        <div class="selected-file"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success btn-large">📤 Yuklash va saqlash</button>
+                        <a href="@Url.Action("Index")" class="btn btn-secondary">❌ Bekor qilish</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Warning -->
+            <div class="warning-box">
+                <div class="warning-icon">⚠️</div>
+                <div>
+                    <strong>Diqqat!</strong>
+                    <ul>
+                        <li>Birinchi qator (header) o'zgartirilmasin</li>
+                        <li>Majburiy ustunlar bo'sh qoldirilmasin</li>
+                        <li>Price va Quantity faqat raqam bo'lishi kerak</li>
+                        <li>Noto'g'ri formatdagi qatorlar o'tkazib yuboriladi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .page-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 1.5rem 2rem;
+    }
+
+        .form-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+    .import-content {
+        padding: 2rem;
+    }
+
+    /* Instructions */
+    .instruction-box {
+        background: linear-gradient(135deg, #e7f3ff 0%, #d1ecf1 100%);
+        border-left: 4px solid #17a2b8;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .instruction-box h3 {
+            color: #17a2b8;
+            margin: 0 0 1rem 0;
+        }
+
+    .instruction-list {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+    }
+
+        .instruction-list li {
+            margin: 1rem 0;
+        }
+
+        .instruction-list strong {
+            color: #17a2b8;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .instruction-list p {
+            margin: 0;
+            color: #666;
+        }
+
+    /* Format Info */
+    .format-info {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .format-info h3 {
+            color: #667eea;
+            margin: 0 0 1rem 0;
+        }
+
+    .format-table {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .format-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 3fr;
+        gap: 1rem;
+        padding: 0.75rem;
+        background: white;
+        border-radius: 6px;
+    }
+
+    .header-row {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: bold;
+    }
+
+    .format-cell {
+        display: flex;
+        align-items: center;
+    }
+
+    .badge-required {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .badge-optional {
+        background-color: #6c757d;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    /* Upload Section */
+    .upload-section {
+        background-color: #fff;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+        .upload-section h3 {
+            color: #667eea;
+            margin: 0 0 1.5rem 0;
+        }
+
+    .file-upload-area {
+        position: relative;
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .file-upload-area:hover {
+            background: linear-gradient(135deg, #e7f3ff 0%, #d1ecf1 100%);
+            border-color: #667eea;
+        }
+
+    .file-upload-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .file-upload-label {
+        display: block;
+        cursor: pointer;
+    }
+
+    .file-upload-text {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+    }
+
+    .file-upload-hint {
+        display: block;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .file-input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    .selected-file {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        background-color: #d4edda;
+        border-radius: 6px;
+        color: #155724;
+        font-weight: 500;
+        display: none;
+    }
+
+    /* Warning */
+    .warning-box {
+        background-color: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 8px;
+        padding: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .warning-icon {
+        font-size: 1.5rem;
+    }
+
+    .warning-box strong {
+        color: #856404;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .warning-box ul {
+        margin: 0;
+        padding-left: 1.5rem;
+        color: #856404;
+    }
+
+    .warning-box li {
+        margin: 0.25rem 0;
+    }
+
+    /* Buttons */
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .warning-box {
+        flex-direction: column;
+    }
+
+    }
+</style>
+
+<script>
+    // File input qachon o'zgarsa, fayl nomini ko'rsatish
+    document.getElementById('file').addEventListener('change', function(e) {
+        var fileName = e.target.files[0]?.name;
+        var selectedFileDiv = document.querySelector('.selected-file');
+        if (fileName) {
+            selectedFileDiv.textContent = '✅ Tanlangan fayl: ' + fileName;
+            selectedFileDiv.style.display = 'block';
+        } else {
+            selectedFileDiv.style.display = 'none';
+        }
+    });
+</script>

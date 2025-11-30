@@ -1,0 +1,194 @@
+﻿@model MVCandKAFKA3.Models.Product
+
+@{
+    ViewData["Title"] = "Yangi mahsulot";
+}
+
+<div class="page-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2>➕ Yangi mahsulot qo'shish</h2>
+        </div>
+
+        <form method="post" action="@Url.Action("Create")" class="product-form">
+            @Html.AntiForgeryToken()
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Name">Mahsulot nomi <span class="required">*</span></label>
+                    <input type="text" id="Name" name="Name" class="form-control" required>
+                    <span class="validation-error">@Html.ValidationMessage("Name")</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Category">Kategoriya <span class="required">*</span></label>
+                    <input type="text" id="Category" name="Category" class="form-control" required>
+                    <span class="validation-error">@Html.ValidationMessage("Category")</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Price">Narx (so'm) <span class="required">*</span></label>
+                    <input type="number" id="Price" name="Price" class="form-control" step="0.01" required>
+                    <span class="validation-error">@Html.ValidationMessage("Price")</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Quantity">Miqdor <span class="required">*</span></label>
+                    <input type="number" id="Quantity" name="Quantity" class="form-control" value="0" required>
+                    <span class="validation-error">@Html.ValidationMessage("Quantity")</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Manufacturer">Ishlab chiqaruvchi</label>
+                <input type="text" id="Manufacturer" name="Manufacturer" class="form-control">
+                <span class="validation-error">@Html.ValidationMessage("Manufacturer")</span>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Ta'rif</label>
+                <textarea id="Description" name="Description" class="form-control" rows="4"></textarea>
+                <span class="validation-error">@Html.ValidationMessage("Description")</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Saqlash</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">❌ Bekor qilish</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .page-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem 2rem;
+    }
+
+        .form-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+    .product-form {
+        padding: 2rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e1e8ed;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .validation-error {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #667eea;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #5568d3;
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+   
+
+    {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    }
+</style>

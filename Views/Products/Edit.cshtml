@@ -1,0 +1,67 @@
+﻿@* Edit.cshtml *@
+@model MVCandKAFKA3.Models.Product
+
+@{
+    ViewData["Title"] = "Mahsulotni tahrirlash";
+}
+
+<div class="page-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2>✏️ Mahsulotni tahrirlash</h2>
+        </div>
+
+        <form method="post" action="@Url.Action("Edit", new { id = Model.Id })" class="product-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Id">
+            <input type="hidden" name="CreatedDate" value="@Model.CreatedDate">
+            <input type="hidden" name="IsSentToKafka" value="@Model.IsSentToKafka">
+            <input type="hidden" name="KafkaStatus" value="@Model.KafkaStatus">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Name">Mahsulot nomi <span class="required">*</span></label>
+                    <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" required>
+                    <span class="validation-error">@Html.ValidationMessage("Name")</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Category">Kategoriya <span class="required">*</span></label>
+                    <input type="text" id="Category" name="Category" value="@Model.Category" class="form-control" required>
+                    <span class="validation-error">@Html.ValidationMessage("Category")</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Price">Narx (so'm) <span class="required">*</span></label>
+                    <input type="number" id="Price" name="Price" value="@Model.Price" class="form-control" step="0.01" required>
+                    <span class="validation-error">@Html.ValidationMessage("Price")</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Quantity">Miqdor <span class="required">*</span></label>
+                    <input type="number" id="Quantity" name="Quantity" value="@Model.Quantity" class="form-control" required>
+                    <span class="validation-error">@Html.ValidationMessage("Quantity")</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Manufacturer">Ishlab chiqaruvchi</label>
+                <input type="text" id="Manufacturer" name="Manufacturer" value="@Model.Manufacturer" class="form-control">
+                <span class="validation-error">@Html.ValidationMessage("Manufacturer")</span>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Ta'rif</label>
+                <textarea id="Description" name="Description" class="form-control" rows="4">@Model.Description</textarea>
+                <span class="validation-error">@Html.ValidationMessage("Description")</span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Saqlash</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">❌ Bekor qilish</a>
+            </div>
+        </form>
+    </div>
+</div>
