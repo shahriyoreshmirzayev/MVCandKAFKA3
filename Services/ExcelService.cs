@@ -10,69 +10,8 @@ namespace MVCandKAFKA3.Services
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
-        // Shablon yaratish
-        public byte[] CreateTemplate()
-        {
-            using var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Products Template");
-
-            // Header
-            worksheet.Cells[1, 1].Value = "Name";
-            worksheet.Cells[1, 2].Value = "Category";
-            worksheet.Cells[1, 3].Value = "Price";
-            worksheet.Cells[1, 4].Value = "Description";
-            worksheet.Cells[1, 5].Value = "Quantity";
-            worksheet.Cells[1, 6].Value = "Manufacturer";
-
-            // Header stil
-            using (var range = worksheet.Cells[1, 1, 1, 6])
-            {
-                range.Style.Font.Bold = true;
-                range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(79, 129, 189));
-                range.Style.Font.Color.SetColor(System.Drawing.Color.White);
-                range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
-            }
-
-            // Namuna ma'lumot
-            worksheet.Cells[2, 1].Value = "Laptop Dell XPS 15";
-            worksheet.Cells[2, 2].Value = "Electronics";
-            worksheet.Cells[2, 3].Value = 5000000;
-            worksheet.Cells[2, 4].Value = "Professional laptop for developers";
-            worksheet.Cells[2, 5].Value = 10;
-            worksheet.Cells[2, 6].Value = "Dell";
-
-            worksheet.Cells[3, 1].Value = "Logitech Mouse";
-            worksheet.Cells[3, 2].Value = "Accessories";
-            worksheet.Cells[3, 3].Value = 150000;
-            worksheet.Cells[3, 4].Value = "Wireless mouse";
-            worksheet.Cells[3, 5].Value = 50;
-            worksheet.Cells[3, 6].Value = "Logitech";
-
-            // Instructions
-            var instructionsSheet = package.Workbook.Worksheets.Add("Instructions");
-            instructionsSheet.Cells[1, 1].Value = "Excel Shablon Yo'riqnomasi";
-            instructionsSheet.Cells[1, 1].Style.Font.Bold = true;
-            instructionsSheet.Cells[1, 1].Style.Font.Size = 16;
-
-            instructionsSheet.Cells[3, 1].Value = "Ustunlar:";
-            instructionsSheet.Cells[4, 1].Value = "1. Name - Mahsulot nomi (majburiy)";
-            instructionsSheet.Cells[5, 1].Value = "2. Category - Kategoriya (majburiy)";
-            instructionsSheet.Cells[6, 1].Value = "3. Price - Narx (majburiy, raqam)";
-            instructionsSheet.Cells[7, 1].Value = "4. Description - Tavsif (ixtiyoriy)";
-            instructionsSheet.Cells[8, 1].Value = "5. Quantity - Miqdor (majburiy, raqam)";
-            instructionsSheet.Cells[9, 1].Value = "6. Manufacturer - Ishlab chiqaruvchi (ixtiyoriy)";
-
-            instructionsSheet.Cells[11, 1].Value = "Muhim:";
-            instructionsSheet.Cells[12, 1].Value = "- Birinchi qator (header) o'zgartirilmasin!";
-            instructionsSheet.Cells[13, 1].Value = "- Namuna ma'lumotlarni o'chirib, o'z ma'lumotlaringizni kiriting";
-            instructionsSheet.Cells[14, 1].Value = "- Price va Quantity faqat raqam bo'lishi kerak";
-
-            worksheet.Cells.AutoFitColumns();
-            instructionsSheet.Cells.AutoFitColumns();
-
-            return package.GetAsByteArray();
-        }
+      
+        
 
         // Export qilish
         public byte[] ExportToExcel(List<Product> products)

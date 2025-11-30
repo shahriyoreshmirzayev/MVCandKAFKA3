@@ -13,11 +13,7 @@ namespace MVCandKAFKA3.Controllers
         private readonly ExcelService _excelService;
         private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(
-            ApplicationDbContext context,
-            KafkaProducerService kafkaService,
-            ExcelService excelService,
-            ILogger<ProductsController> logger)
+        public ProductsController(ApplicationDbContext context, KafkaProducerService kafkaService, ExcelService excelService, ILogger<ProductsController> logger)
         {
             _context = context;
             _kafkaService = kafkaService;
@@ -26,11 +22,7 @@ namespace MVCandKAFKA3.Controllers
         }
 
         // GET: Products - Pagination, Search, Sort
-        public async Task<IActionResult> Index(
-            string searchString,
-            string sortOrder,
-            string currentFilter,
-            int? pageNumber)
+        public async Task<IActionResult> Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -81,11 +73,7 @@ namespace MVCandKAFKA3.Controllers
                 .Take(pageSize)
                 .ToListAsync();
 
-            var paginatedList = new PaginatedList<Product>(
-                items,
-                count,
-                pageNumber ?? 1,
-                pageSize);
+            var paginatedList = new PaginatedList<Product>(items, count, pageNumber ?? 1, pageSize);
 
             return View(paginatedList);
         }
@@ -171,13 +159,7 @@ namespace MVCandKAFKA3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Excel Template yuklab olish
-        public IActionResult DownloadTemplate()
-        {
-            var template = _excelService.CreateTemplate();
-            return File(template, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                $"ProductsTemplate_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
-        }
+
 
         // GET: Export to Excel
         public async Task<IActionResult> ExportToExcel()
