@@ -28,7 +28,6 @@ namespace MVCandKAFKA3.Services
             _producer = new ProducerBuilder<Null, string>(config).Build();
         }
 
-        // Asosiy method - Product yuborish
         public async Task<bool> SendMessageAsync(Product product)
         {
             try
@@ -48,7 +47,7 @@ namespace MVCandKAFKA3.Services
                 );
 
                 _logger.LogInformation(
-                    "Kafka'ga muvaffaqiyatli yuborildi - Topic: {Topic}, Partition: {Partition}, Offset: {Offset}",
+                    "Muvaffaqiyatli yuborildi",
                     result.Topic,
                     result.Partition.Value,
                     result.Offset.Value
@@ -58,18 +57,17 @@ namespace MVCandKAFKA3.Services
             }
             catch (ProduceException<Null, string> ex)
             {
-                _logger.LogError(ex, "Kafka produce xatolik - Reason: {Reason}", ex.Error.Reason);
+                _logger.LogError(ex, "Xatolik", ex.Error.Reason);
                 return false;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Kafka yuborishda kutilmagan xatolik");
+                _logger.LogError(ex, "Xatolik");
                 return false;
             }
         }
 
-        // Generic method - Istalgan type yuborish
-        public async Task<bool> SendAsync<T>(T message)
+       public async Task<bool> SendAsync<T>(T message)
         {
             try
             {
@@ -84,7 +82,7 @@ namespace MVCandKAFKA3.Services
                 );
 
                 _logger.LogInformation(
-                    "Message yuborildi - Topic: {Topic}, Offset: {Offset}",
+                    "Yuborildi",
                     result.Topic,
                     result.Offset.Value
                 );
@@ -93,12 +91,11 @@ namespace MVCandKAFKA3.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Xatolik yuz berdi");
+                _logger.LogError(ex, "Xatolik");
                 return false;
             }
         }
 
-        // Custom topic bilan yuborish
         public async Task<bool> SendAsync<T>(string topic, T message)
         {
             try
@@ -128,7 +125,6 @@ namespace MVCandKAFKA3.Services
             }
         }
 
-        // Producer'ni to'g'ri dispose qilish
         public void Dispose()
         {
             _producer?.Flush(TimeSpan.FromSeconds(10));

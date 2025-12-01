@@ -11,15 +11,11 @@ namespace MVCandKAFKA3.Services
         }
 
       
-        
-
-        // Export qilish
         public byte[] ExportToExcel(List<Product> products)
         {
             using var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Products");
 
-            // Header
             worksheet.Cells[1, 1].Value = "Id";
             worksheet.Cells[1, 2].Value = "Name";
             worksheet.Cells[1, 3].Value = "Category";
@@ -30,7 +26,6 @@ namespace MVCandKAFKA3.Services
             worksheet.Cells[1, 8].Value = "Kafka Status";
             worksheet.Cells[1, 9].Value = "Created Date";
 
-            // Header stil
             using (var range = worksheet.Cells[1, 1, 1, 9])
             {
                 range.Style.Font.Bold = true;
@@ -39,7 +34,6 @@ namespace MVCandKAFKA3.Services
                 range.Style.Font.Color.SetColor(System.Drawing.Color.White);
             }
 
-            // Ma'lumotlarni yozish
             for (int i = 0; i < products.Count; i++)
             {
                 var product = products[i];
@@ -63,7 +57,6 @@ namespace MVCandKAFKA3.Services
             return package.GetAsByteArray();
         }
 
-        // Import qilish
         public List<Product> ImportFromExcel(Stream stream)
         {
             var products = new List<Product>();

@@ -44,7 +44,7 @@ namespace MVCandKAFKA3.Services
             using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
             consumer.Subscribe(_configuration["Kafka:FeedbackTopic"]);
 
-            _logger.LogInformation("🎧 Feedback Consumer ishga tushdi");
+            _logger.LogInformation("Consumer ishga tushdi");
 
             try
             {
@@ -62,13 +62,13 @@ namespace MVCandKAFKA3.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "❌ Feedback processing xatolik");
+                        _logger.LogError(ex, "Xatolik");
                     }
                 }
             }
             catch (OperationCanceledException)
             {
-                _logger.LogInformation("🛑 Feedback Consumer to'xtatildi");
+                _logger.LogInformation("Xatolik");
             }
             finally
             {
@@ -91,7 +91,7 @@ namespace MVCandKAFKA3.Services
 
                 if (product == null)
                 {
-                    _logger.LogWarning("⚠️ Product topilmadi - ID: {ProductId}", feedback.ProductId);
+                    _logger.LogWarning("Xatolik", feedback.ProductId);
                     return;
                 }
 
@@ -101,12 +101,12 @@ namespace MVCandKAFKA3.Services
 
                 await context.SaveChangesAsync();
 
-                _logger.LogInformation("✅ Feedback qabul qilindi - ProductId: {ProductId}, Status: {Status}",
+                _logger.LogInformation("Xatolik",
                     feedback.ProductId, feedback.Status);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "❌ Feedback save xatolik");
+                _logger.LogError(ex, "Xatolik");
             }
         }
     }

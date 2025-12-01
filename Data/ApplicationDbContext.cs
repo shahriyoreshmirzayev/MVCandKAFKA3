@@ -5,12 +5,8 @@ namespace MVCandKAFKA3.Data;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    { }
 
-    public DbSet<Product> Products { get; set; }
-
-   
+    public DbSet<Product> Products { get; set; } 
 }

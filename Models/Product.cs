@@ -6,15 +6,15 @@ public class Product
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "Mahsulot nomi majburiy")]
+    [Required]
     [StringLength(100)]
     public string Name { get; set; }
 
-    [Required(ErrorMessage = "Kategoriya majburiy")]
+    [Required]
     [StringLength(50)]
     public string Category { get; set; }
 
-    [Required(ErrorMessage = "Narx majburiy")]
+    [Required]
     [Range(0, double.MaxValue, ErrorMessage = "Narx 0 dan katta bo'lishi kerak")]
     public decimal Price { get; set; }
 
@@ -30,10 +30,9 @@ public class Product
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedDate { get; set; }
 
-    // Kafka status
     public bool IsSentToKafka { get; set; } = false;
     public DateTime? SentToKafkaDate { get; set; }
-    public string? KafkaStatus { get; set; } // "Pending", "Approved", "Rejected"
+    public string? KafkaStatus { get; set; } 
     public string? RejectionReason { get; set; }
 }
 public class PaginatedList<T>

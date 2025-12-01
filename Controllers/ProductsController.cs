@@ -21,7 +21,6 @@ namespace MVCandKAFKA3.Controllers
             _logger = logger;
         }
 
-        // GET: Products - Pagination, Search, Sort
         public async Task<IActionResult> Index(string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -43,7 +42,6 @@ namespace MVCandKAFKA3.Controllers
 
             var products = from p in _context.Products select p;
 
-            // Search
             if (!string.IsNullOrEmpty(searchString))
             {
                 products = products.Where(p =>
@@ -53,7 +51,6 @@ namespace MVCandKAFKA3.Controllers
                     p.Manufacturer.Contains(searchString));
             }
 
-            // Sort
             products = sortOrder switch
             {
                 "name_desc" => products.OrderByDescending(p => p.Name),
@@ -78,13 +75,11 @@ namespace MVCandKAFKA3.Controllers
             return View(paginatedList);
         }
 
-        // GET: Products/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
@@ -100,7 +95,6 @@ namespace MVCandKAFKA3.Controllers
             return View(product);
         }
 
-        // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -109,7 +103,6 @@ namespace MVCandKAFKA3.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Product product)
@@ -135,7 +128,6 @@ namespace MVCandKAFKA3.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -144,7 +136,6 @@ namespace MVCandKAFKA3.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -161,7 +152,6 @@ namespace MVCandKAFKA3.Controllers
 
 
 
-        // GET: Export to Excel
         public async Task<IActionResult> ExportToExcel()
         {
             var products = await _context.Products.ToListAsync();
@@ -170,13 +160,11 @@ namespace MVCandKAFKA3.Controllers
                 $"Products_{DateTime.Now:yyyyMMddHHmmss}.xlsx");
         }
 
-        // GET: Import
         public IActionResult Import()
         {
             return View();
         }
 
-        // POST: Import
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Import(IFormFile file)
@@ -221,7 +209,6 @@ namespace MVCandKAFKA3.Controllers
             }
         }
 
-        // POST: Send Multiple to Kafka
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMultipleToKafka(List<int> selectedIds, string action)
